@@ -1,0 +1,22 @@
+{
+  "name": "eledate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yaromikhaylov/eledate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yaromikhaylov/eledate/issues"
+  },
+  "homepage": "https://github.com/yaromikhaylov/eledate#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
