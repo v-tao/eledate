@@ -6,5 +6,10 @@
 <body>
     <a href="/">Home</a>
     <a href="/profiles">Profiles</a>
+    <% if (!currentUser) { %>
     <a href="/login">Login</a>
     <a href="/signup">Sign Up</a>
+    <% } else { %>
+    <span>Welcome, <%=currentUser.username%>!</span>
+    <a href="/logout">Logout</a>
+    <% } %>

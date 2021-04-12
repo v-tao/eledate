@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose"),
+    passportLocalMongoose = require("passport-local-mongoose");
 const profileSchema = new mongoose.Schema({
     username: String,
     password: String,
@@ -7,4 +8,8 @@ const profileSchema = new mongoose.Schema({
     video: String,
     description: String,
 })
+profileSchema.plugin(passportLocalMongoose);
+profileSchema.methods.validPassword = (password) => {
+    return (this.password === password);
+}
 module.exports = mongoose.model("Profile", profileSchema)
