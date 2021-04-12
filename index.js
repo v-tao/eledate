@@ -56,6 +56,16 @@ app.get("/profiles", (req, res) => {
   }
 });
 
+app.get("/matches", (req, res) => {
+  if (!req.user) {
+    res.redirect("/login")
+  } else {
+    Profile.find({$and: [{yes: req.user.id}, {_id: {$in: req.user.yes}}]}).exec((err, matches) => {
+      res.render("matches", {matches: matches});
+    });
+  }
+})
+
 app.post("/signup", (req, res) => {
   let profile = new Profile ({
       username: req.body.username,
