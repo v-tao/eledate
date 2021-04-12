@@ -33,6 +33,14 @@ app.post("/profiles/new", (req, res) => {
     res.redirect("/profiles");
 })
 
+app.get("/login", (req, res) => {
+    res.render("login");
+})
+
+app.get("/signup", (req, res) => {
+    res.render("signup");
+})
+
 mongoose.connect("mongodb+srv://eledate:eledate@cluster0.cgrf8.mongodb.net/eledate?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useCreateIndex: true,
