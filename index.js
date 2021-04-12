@@ -31,32 +31,9 @@ mongoose.connect("mongodb+srv://eledate:eledate@cluster0.cgrf8.mongodb.net/eleda
 	console.log("ERROR", err.message);
 });
 
-// passport.use(new LocalStrategy(
-//   (username, password, done) => {
-//     Profile.findOne({username: username}, (err, user) => {
-//       if (err) { return done(err); }
-//       if (!user) {
-//         return done(null, false, { message: 'Incorrect username.' });
-//       }
-//       if (!user.validPassword(password)) {
-//         return done(null, false, { message: 'Incorrect password.' });
-//       }
-//       return done(null, user);
-//     });
-//   }
-// ));
 passport.use(new LocalStrategy(Profile.authenticate()));
 passport.serializeUser(Profile.serializeUser());
 passport.deserializeUser(Profile.deserializeUser());
-// passport.serializeUser((user, done) => {
-//   done(null, user.id);
-// });
-  
-// passport.deserializeUser((id, done) => {
-//   Profile.findById(id, (err, user) => {
-//     done(err, user);
-//   });
-// });
 
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
@@ -68,9 +45,15 @@ app.get("/", (req, res)=> {
 });
 
 app.get("/profiles", (req, res) => {
-  Profile.find({}).exec((err, profiles) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else {
+    let hiddenProfiles = [req.user.id]
+    hiddenProfiles = hiddenProfiles.concat(req.user.yes).concat(req.user.no);
+    Profile.find({_id: {$nin: hiddenProfiles}}).exec((err, profiles) => {
       res.render("profiles", {profiles:profiles})
-  })
+    });
+  }
 });
 
 app.post("/signup", (req, res) => {
@@ -109,6 +92,26 @@ app.post("/login", passport.authenticate("local", {
 app.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/")
+});
+
+app.post("/profiles/:id/yes", (req, res) => {
+  Profile.findById(req.user.id).exec((err, user) => {
+    Profile.findById(req.params.id).exec((err,user2)=> {
+      user.yes.push(user2);
+      user.save();
+      res.redirect("/profiles");
+    })
+  })
+});
+
+app.post("/profiles/:id/no", (req, res) => {
+  Profile.findById(req.user.id).exec((err, user) => {
+    Profile.findById(req.params.id).exec((err,user2)=> {
+      user.no.push(user2);
+      user.save();
+      res.redirect("/profiles");
+    })
+  })
 });
 
 app.listen(PORT, function () {

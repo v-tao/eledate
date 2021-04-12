@@ -7,6 +7,18 @@ const profileSchema = new mongoose.Schema({
     age: Number,
     video: String,
     description: String,
+    yes: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profile"
+    }],
+    no: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profile"
+    }],
+    matches: [ {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Profile"
+    }],
 })
 profileSchema.plugin(passportLocalMongoose);
 profileSchema.methods.validPassword = (password) => {
