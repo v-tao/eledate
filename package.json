@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/yaromikhaylov/eledate#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "ejs": "^3.1.6",
     "ejs-lint": "^1.2.0",
     "express": "^4.17.1",
     "method-override": "^3.0.0",
-    "mongoose": "^5.12.3"
+    "mongoose": "^5.12.3",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.1.0"
   }
 }
