@@ -1,17 +1,13 @@
-<!doctype html>
-
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-
-  <title>The HTML5 Herald</title>
-  <meta name="description" content="The HTML5 Herald">
-  <meta name="author" content="SitePoint">
-  <p><%= test %></p>
-
-
-</head>
-
-<body>
-</body>
-</html>
+<%- include("../partials/header") %>
+    <form action="/profiles/new" method="POST">
+      <label for="name">Name</label>
+      <input required type="text" name="name">
+      <label for="age">Age</label>
+      <input required type="number" min="0" name="age">
+      <label for="video">Video Embed URL</label>
+      <input required type="text" name="video">
+      <label for="description">Description</label>
+      <textarea required name="description"></textarea>
+      <input type=submit>
+    </form>
+<%- include("../partials/footer") %>
