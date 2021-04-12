@@ -25,6 +25,7 @@ mongoose.connect("mongodb+srv://eledate:eledate@cluster0.cgrf8.mongodb.net/eleda
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
+  useFindAndModify: false,
 }).then(() => {
 	console.log("Connected to DB");
 }).catch(err => {
@@ -123,6 +124,35 @@ app.post("/profiles/:id/no", (req, res) => {
     })
   })
 });
+
+app.get("/profiles/:id/edit", (req, res) => {
+  if(!req.user) {
+    res.redirect("/login");
+  } else if (!(req.user.id == req.params.id)) {
+    res.redirect("/profiles");
+  } else {
+    Profile.findById(req.params.id).exec((err, profile) => {
+      res.render("edit", {profile: profile});
+    })
+  }
+})
+
+app.put("/profiles/:id", (req, res) => {
+  if (!req.user) {
+    res.redirect("/login");
+  } else if (!(req.user.id == req.params.id)) {
+    res.redirect("/profiles");
+  } else {
+    Profile.findByIdAndUpdate(req.params.id, {
+      name: req.body.name,
+      age: req.body.age,
+      video: req.body.video,
+      description: req.body.description
+    }, (err, profile) => {
+      res.redirect("/profiles/");
+    })
+  }
+})
 
 app.listen(PORT, function () {
   console.log('Running on port : ' + PORT);
