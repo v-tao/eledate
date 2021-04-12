@@ -3,12 +3,15 @@ const express = require("express"),
     Profile = require("./models/Profile.js"),
     methodOverride = require("method-override"),
     bodyParser = require("body-parser"),
+    passport = require("passport"),
+    LocalStrategy = require("passport-local"),
     app = express(),
     PORT = 3000;
 app.set("view engine", "ejs");
 app.set('views', __dirname + '/views');
 app.use(methodOverride("_method"));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 app.get("/", (req, res)=> {
     res.render("index", {test: "test"});
