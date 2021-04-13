@@ -5,4 +5,13 @@
 </head>
 <body>
     <a href="/">Home</a>
+    <% if (!currentUser) { %>
+    <a href="/login">Login</a>
+    <a href="/signup">Sign Up</a>
+    <% } else { %>
+    <span>Welcome, <%=currentUser.username%>!</span>
     <a href="/profiles">Profiles</a>
+    <a href="/matches">Matches</a>
+    <a href="/profiles/<%=currentUser._id%>/edit">Edit Profile</a>
+    <a href="/logout">Logout</a>
+    <% } %>

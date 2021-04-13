@@ -1,0 +1,17 @@
+<%- include("../partials/header") %>
+<form action="/signup" method="POST">
+    <label for="username">Username</label>
+    <input type="text" name="username">
+    <label for="password">Password</label>
+    <input type="password" name="password">
+    <label for="name">Name</label>
+    <input required type="text" name="name">
+    <label for="age">Age</label>
+    <input required type="number" min="0" name="age">
+    <label for="video">Video Embed URL</label>
+    <input required type="text" name="video">
+    <label for="description">Description</label>
+    <textarea required name="description"></textarea>
+    <input type=submit>
+</form>
+<%- include("../partials/footer") %>
