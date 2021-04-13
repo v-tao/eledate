@@ -3,10 +3,11 @@ const express = require("express"),
   Profile = require("./models/Profile.js"),
   methodOverride = require("method-override"),
   passport = require("passport"),
+  multer = require("multer"),
   LocalStrategy = require("passport-local"),
   app = express(),
   PORT = 3000;
-
+   
 app.use(require("express-session")({
   secret: "vivian is the coolest person ever",
   resave: false,
