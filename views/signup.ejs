@@ -1,5 +1,5 @@
 <%- include("../partials/header") %>
-<form action="/signup" method="POST">
+<form action="/signup" method="POST" enctype="multipart/form-data">
     <label for="username">Username</label>
     <input type="text" name="username">
     <label for="password">Password</label>
@@ -8,8 +8,8 @@
     <input required type="text" name="name">
     <label for="age">Age</label>
     <input required type="number" min="0" name="age">
-    <label for="video">Video Embed URL</label>
-    <input required type="text" name="video">
+    <label for="video">Video</label>
+    <input required type="file" name="video" accept="video/*">
     <label for="description">Description</label>
     <textarea required name="description"></textarea>
     <input type=submit>

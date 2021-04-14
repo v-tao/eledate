@@ -4,12 +4,29 @@ const express = require("express"),
   methodOverride = require("method-override"),
   passport = require("passport"),
   multer = require("multer"),
+  cloudinary = require("cloudinary"),
   LocalStrategy = require("passport-local"),
+  dotenv = require("dotenv").config(),
   app = express(),
   PORT = 3000;
-   
+
+const videoFilter = (req, file, cb)=> {
+  if (!file.originalname.match(/\.(mov|mpeg4|mp4|avi|wmv|mpegps|flv)$/i)) {
+     return cb(new Error("Please submit an accepted file type"), "false");
+  }
+  cb(null, true);
+}
+
+const upload = multer({fileFilter: videoFilter});
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 app.use(require("express-session")({
-  secret: "vivian is the coolest person ever",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false
 }));
@@ -22,7 +39,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb+srv://eledate:eledate@cluster0.cgrf8.mongodb.net/eledate?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://" + process.env.DB_USER + ":" + process.env.DB_PASS + "@cluster0.cgrf8.mongodb.net/" + process.env.DB_NAME + "?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useUnifiedTopology: true,
